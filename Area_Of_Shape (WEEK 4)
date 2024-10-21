@@ -1,0 +1,58 @@
+import java.util.Scanner;
+abstract class Shape {
+int x, y;
+abstract void printArea();
+}
+class Rectangle extends Shape {
+Rectangle(int length, int breadth) {
+this.x = length;
+this.y = breadth;
+}
+void printArea() {
+System.out.println("Area of Rectangle: " + (x * y));
+}
+}
+class Triangle extends Shape {
+Triangle(int base, int height) {
+this.x = base;
+this.y = height;
+}
+void printArea() {
+System.out.println("Area of Triangle: " + (0.5 * x * y));
+}
+}
+class Circle extends Shape {
+Circle(int radius) {
+this.x = radius;    
+}
+void printArea() {
+System.out.println("Area of Circle: " + (Math.PI * x * x));
+}
+}
+public class AreaOfShape {
+public static void main(String[] args) {
+System.out.println("Name: Monisha");
+System.out.println("USN: 24BECS411");
+Scanner s = new Scanner(System.in);
+System.out.print("Enter the value of length: ");
+int length = s.nextInt();
+System.out.print("Enter the value of breadth: ");
+int breadth = s.nextInt();
+Shape r = new Rectangle(length, breadth);
+r.printArea();
+
+System.out.print("Enter the value of base: ");
+int base = s.nextInt();
+System.out.print("Enter the value of height: ");
+int height = s.nextInt();
+Shape t = new Triangle(base, height);
+t.printArea();
+
+System.out.print("Enter the value of radius: ");
+int radius = s.nextInt();
+Shape c = new Circle(radius);
+c.printArea();
+     
+s.close();
+}
+}
