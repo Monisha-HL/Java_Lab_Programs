@@ -1,0 +1,132 @@
+Student.java
+package CIE;
+
+public class Student {
+    public String usn;
+    public String name;
+    public int sem;
+
+    public Student(String usn, String name, int sem) {
+        this.usn = usn;
+        this.name = name;
+        this.sem = sem;
+    }
+
+    public void display() {
+        System.out.println("USN: " + usn);
+        System.out.println("Name: " + name);
+        System.out.println("Semester: " + sem);
+    }
+}
+
+Internals.java
+package CIE;
+
+public class Internals extends Student {
+    public int[] internalMarks = new int[5];
+
+    public Internals(String usn, String name, int sem, int[] internalMarks) {
+        super(usn, name, sem);
+        this.internalMarks = internalMarks;
+    }
+
+    public void display() {
+        super.display();
+        System.out.print("Internal Marks: ");
+        for (int mark : internalMarks) {
+            System.out.print(mark + " ");
+        }
+        System.out.println();
+    }
+}
+
+External.java
+package SEE;
+
+import CIE.Student;
+
+public class External extends Student {
+    public int[] externalMarks = new int[5];
+
+    public External(String usn, String name, int sem, int[] externalMarks) {
+        super(usn, name, sem);
+        this.externalMarks = externalMarks;
+    }
+
+    @Override
+    public void display() {
+        super.display();
+        System.out.print("External Marks: ");
+        for (int mark : externalMarks) {
+            System.out.print(mark + " ");
+        }
+        System.out.println();
+    }
+}
+
+FinalMarks.java
+import CIE.Internals;
+import SEE.External;
+import java.util.Scanner;
+
+public class FinalMarks {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter number of students: ");
+        int n = scanner.nextInt();
+        scanner.nextLine();  // Consume newline
+
+        Internals[] internalStudents = new Internals[n];
+        External[] externalStudents = new External[n];
+
+        for (int i = 0; i < n; i++) {
+            System.out.println("Enter details for student " + (i + 1) + ":");
+
+            System.out.print("Enter USN: ");
+            String usn = scanner.nextLine();
+
+            System.out.print("Enter name: ");
+            String name = scanner.nextLine();
+
+            System.out.print("Enter semester: ");
+            int sem = scanner.nextInt();
+
+            int[] internalMarks = new int[5];
+            System.out.println("Enter internal marks for 5 courses: ");
+            for (int j = 0; j < 5; j++) {
+                internalMarks[j] = scanner.nextInt();
+            }
+
+            internalStudents[i] = new Internals(usn, name, sem, internalMarks);
+
+            int[] externalMarks = new int[5];
+            System.out.println("Enter external marks for 5 courses: ");
+            for (int j = 0; j < 5; j++) {
+                externalMarks[j] = scanner.nextInt();
+            }
+
+            externalStudents[i] = new External(usn, name, sem, externalMarks);
+            scanner.nextLine();  // Consume newline
+        }
+
+        // Display student details and final marks
+        for (int i = 0; i < n; i++) {
+            internalStudents[i].display();
+            externalStudents[i].display();
+
+            int[] finalMarks = new int[5];
+            for (int j = 0; j < 5; j++) {
+                finalMarks[j] = internalStudents[i].internalMarks[j] + externalStudents[i].externalMarks[j];
+            }
+
+            System.out.print("Final Marks for student " + (i + 1) + ": ");
+            for (int mark : finalMarks) {
+                System.out.print(mark + " ");
+            }
+            System.out.println();
+        }
+
+        scanner.close();
+    }
+}
