@@ -1,0 +1,69 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class DivisionApp extends JFrame {
+    private JTextField num1Field, num2Field, resultField;
+    private JButton divideButton;
+
+    public DivisionApp() {
+        // Create UI elements
+        num1Field = new JTextField(10);
+        num2Field = new JTextField(10);
+        resultField = new JTextField(10);
+        resultField.setEditable(false); // Make result field non-editable
+        divideButton = new JButton("Divide");
+
+        // Add action listener to the button
+        divideButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                performDivision();
+            }
+        });
+
+        // Set up the layout
+        setLayout(new FlowLayout());
+        add(new JLabel("Num1: "));
+        add(num1Field);
+        add(new JLabel("Num2: "));
+        add(num2Field);
+        add(divideButton);
+        add(new JLabel("Result: "));
+        add(resultField);
+
+        // Set up the frame
+        setTitle("Division App");
+        setSize(400, 150);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null); // Center the frame
+    }
+
+    private void performDivision() {
+        try {
+            // Get the input values
+            int num1 = Integer.parseInt(num1Field.getText());
+            int num2 = Integer.parseInt(num2Field.getText());
+
+            // Perform the division
+            int result = num1 / num2;
+
+            // Display the result
+            resultField.setText(String.valueOf(result));
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Please enter valid integers.", "Number Format Error", JOptionPane.ERROR_MESSAGE);
+        } catch (ArithmeticException e) {
+            JOptionPane.showMessageDialog(this, "Cannot divide by zero.", "Arithmetic Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new DivisionApp().setVisible(true);
+            }
+        });
+    }
+}
